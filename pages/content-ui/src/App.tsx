@@ -9,10 +9,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="flex items-center justify-between gap-2 rounded bg-blue-100 px-2 py-1">
-      <div className="flex gap-1 text-blue-500">
-        Edit <strong className="text-blue-700">pages/content-ui/src/app.tsx</strong> and save to reload.
-      </div>
+    <div className="fixed bottom-0 flex items-center justify-between gap-2 rounded bg-gray-800 px-2 py-1">
       <ToggleButton onClick={exampleThemeStorage.toggle}>{t('toggleTheme')}</ToggleButton>
     </div>
   );
