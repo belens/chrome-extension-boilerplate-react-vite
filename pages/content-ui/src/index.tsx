@@ -1,10 +1,11 @@
 import { createRoot } from 'react-dom/client';
 import App from '@src/App';
+import Takeover from '@src/Takeover';
 // @ts-expect-error Because file doesn't exist before build
 import tailwindcssOutput from '../dist/tailwind-output.css?inline';
 
 const root = document.createElement('div');
-root.id = 'chrome-extension-boilerplate-react-vite-content-view-root';
+root.id = 'sancorp-extension-content-view-root';
 
 document.body.append(root);
 
@@ -30,5 +31,16 @@ if (navigator.userAgent.includes('Firefox')) {
   shadowRoot.adoptedStyleSheets = [globalStyleSheet];
 }
 
+const takeoverHostnames = ['youtube'];
+
+function showTakeover(hostname: string) {
+  return takeoverHostnames.some(takeoverHost => hostname.includes(takeoverHost));
+}
+
 shadowRoot.appendChild(rootIntoShadow);
-createRoot(rootIntoShadow).render(<App />);
+
+if (showTakeover(document.location.hostname)) {
+  createRoot(rootIntoShadow).render(<Takeover />);
+} else {
+  createRoot(rootIntoShadow).render(<App />);
+}
