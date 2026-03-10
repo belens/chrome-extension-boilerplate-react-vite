@@ -1,9 +1,9 @@
 import '@src/NewTab.css';
 import '@src/NewTab.scss';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { withErrorBoundary, withSuspense } from '@extension/shared';
 import TrackerCard from '@src/TrackerCard';
-import { getMockData } from '@src/mockData';
+import { usePriceData } from '@src/api/usePriceData';
 import type { TimeRange } from '@src/mockData';
 
 const TIME_RANGES: TimeRange[] = ['1D', '1W', '1M', '1Y', '5Y'];
@@ -18,7 +18,7 @@ const TV_TIMEFRAMES: Record<TimeRange, string> = {
 
 const NewTab = () => {
   const [range, setRange] = useState<TimeRange>('1W');
-  const data = useMemo(() => getMockData(range), [range]);
+  const { gold, oil, loading, error } = usePriceData(range);
 
   return (
     <div className="min-h-screen bg-[rgb(32,33,36)] px-8 py-10 font-sans">
@@ -36,22 +36,32 @@ const NewTab = () => {
           ))}
         </div>
 
-        <div className="flex max-w-[600px] flex-col gap-4">
-          <TrackerCard
-            title="Gold"
-            data={data.gold}
-            color="#facc15"
-            unit="$"
-            href={`https://www.tradingview.com/symbols/XAUUSD/?timeframe=${TV_TIMEFRAMES[range]}`}
-          />
-          <TrackerCard
-            title="Crude Oil (WTI)"
-            data={data.oil}
-            color="#38bdf8"
-            unit="$"
-            href={`https://www.tradingview.com/symbols/USOIL/?timeframe=${TV_TIMEFRAMES[range]}`}
-          />
-        </div>
+        {error && <div className="mb-4 text-sm text-red-400">{error}</div>}
+
+        {loading ? (
+          <div className="text-sm text-gray-500">Loading...</div>
+        ) : (
+          <div className="flex max-w-[600px] flex-col gap-4">
+            {gold.length >= 2 && (
+              <TrackerCard
+                title="Gold"
+                data={gold}
+                color="#facc15"
+                unit="$"
+                href={`https://www.tradingview.com/symbols/XAUUSD/?timeframe=${TV_TIMEFRAMES[range]}`}
+              />
+            )}
+            {oil.length >= 2 && (
+              <TrackerCard
+                title="Crude Oil (WTI)"
+                data={oil}
+                color="#38bdf8"
+                unit="$"
+                href={`https://www.tradingview.com/symbols/USOIL/?timeframe=${TV_TIMEFRAMES[range]}`}
+              />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
