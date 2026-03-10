@@ -17,36 +17,22 @@ export default function TrackerCard({ title, data, color, unit, href }: TrackerC
   const isPositive = change >= 0;
 
   return (
-    <div
-      style={{
-        backgroundColor: 'rgb(41, 42, 46)',
-        borderRadius: 12,
-        padding: '16px 20px',
-        flex: 1,
-        minWidth: 0,
-      }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 4 }}>
+    <div className="min-w-0 flex-1 rounded-xl bg-[rgb(41,42,46)] px-5 py-4">
+      <div className="mb-1 flex items-baseline justify-between">
         <a
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: '#9ca3af', fontSize: 13, fontWeight: 500, textDecoration: 'none' }}
-          onMouseEnter={e => (e.currentTarget.style.color = '#d1d5db')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#9ca3af')}>
+          className="text-[13px] font-medium text-gray-400 no-underline hover:text-gray-300">
           {title}
         </a>
-        <span
-          style={{
-            color: isPositive ? '#34d399' : '#f87171',
-            fontSize: 12,
-            fontWeight: 500,
-          }}>
+        <span className={`text-xs font-medium ${isPositive ? 'text-emerald-400' : 'text-red-400'}`}>
           {isPositive ? '+' : ''}
           {change.toFixed(2)} ({isPositive ? '+' : ''}
           {changePercent.toFixed(2)}%)
         </span>
       </div>
-      <div style={{ color: '#f3f4f6', fontSize: 28, fontWeight: 600, marginBottom: 12 }}>
+      <div className="mb-3 text-[28px] font-semibold text-gray-100">
         {unit}
         {current.value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </div>

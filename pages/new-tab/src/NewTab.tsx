@@ -21,36 +21,22 @@ const NewTab = () => {
   const data = useMemo(() => getMockData(range), [range]);
 
   return (
-    <div
-      style={{
-        backgroundColor: 'rgb(32, 33, 36)',
-        minHeight: '100vh',
-        padding: '40px 32px',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-        <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+    <div className="min-h-screen bg-[rgb(32,33,36)] px-8 py-10 font-sans">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="mb-5 flex gap-2">
           {TIME_RANGES.map(r => (
             <button
               key={r}
               onClick={() => setRange(r)}
-              style={{
-                padding: '6px 14px',
-                borderRadius: 6,
-                border: 'none',
-                fontSize: 13,
-                fontWeight: 500,
-                cursor: 'pointer',
-                backgroundColor: r === range ? 'rgba(255,255,255,0.12)' : 'transparent',
-                color: r === range ? '#f3f4f6' : '#6b7280',
-                transition: 'all 0.15s',
-              }}>
+              className={`cursor-pointer rounded-md border-none px-3.5 py-1.5 text-[13px] font-medium transition-all duration-150 ${
+                r === range ? 'bg-white/[.12] text-gray-100' : 'bg-transparent text-gray-500'
+              }`}>
               {r}
             </button>
           ))}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 600 }}>
+        <div className="flex max-w-[600px] flex-col gap-4">
           <TrackerCard
             title="Gold"
             data={data.gold}

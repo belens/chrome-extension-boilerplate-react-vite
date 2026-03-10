@@ -58,16 +58,16 @@ export default function PriceChart({ data, color, label, unit }: PriceChartProps
               if (!tooltip) return;
               const idx = u.cursor.idx;
               if (idx == null) {
-                tooltip.style.display = 'none';
+                tooltip.classList.add('hidden');
                 return;
               }
               const ts = u.data[0][idx];
               const val = u.data[1][idx];
               if (ts == null || val == null) {
-                tooltip.style.display = 'none';
+                tooltip.classList.add('hidden');
                 return;
               }
-              tooltip.style.display = 'block';
+              tooltip.classList.remove('hidden');
               tooltip.textContent = `${formatTooltipDate(ts)}  ${unit}${val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
               const left = u.valToPos(ts, 'x');
               tooltip.style.left = `${left}px`;
@@ -125,23 +125,10 @@ export default function PriceChart({ data, color, label, unit }: PriceChartProps
   );
 
   return (
-    <div ref={containerRef} style={{ width: '100%', position: 'relative' }}>
+    <div ref={containerRef} className="relative w-full">
       <div
         ref={tooltipRef}
-        style={{
-          display: 'none',
-          position: 'absolute',
-          top: 0,
-          transform: 'translateX(-50%)',
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          color: '#e5e7eb',
-          padding: '4px 8px',
-          borderRadius: 4,
-          fontSize: 11,
-          whiteSpace: 'nowrap',
-          pointerEvents: 'none',
-          zIndex: 10,
-        }}
+        className="pointer-events-none absolute top-0 z-10 hidden -translate-x-1/2 whitespace-nowrap rounded bg-black/80 px-2 py-1 text-[11px] text-gray-200"
       />
       <UplotReact options={opts} data={uData} />
     </div>
