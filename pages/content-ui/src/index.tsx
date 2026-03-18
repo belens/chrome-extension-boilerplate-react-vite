@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import App from '@src/App';
 import Takeover from '@src/Takeover';
+import LeetcodeExploreApp from '@src/matches/leetcode-explore/App';
 // @ts-expect-error Because file doesn't exist before build
 import tailwindcssOutput from '../dist/tailwind-output.css?inline';
 
@@ -37,9 +38,15 @@ function showTakeover(hostname: string) {
   return takeoverHostnames.some(takeoverHost => hostname.includes(takeoverHost));
 }
 
+function isLeetcodeExplore() {
+  return window.location.hostname.includes('leetcode.com') && window.location.pathname.startsWith('/explore/');
+}
+
 shadowRoot.appendChild(rootIntoShadow);
 
-if (showTakeover(document.location.hostname)) {
+if (isLeetcodeExplore()) {
+  createRoot(rootIntoShadow).render(<LeetcodeExploreApp />);
+} else if (showTakeover(document.location.hostname)) {
   createRoot(rootIntoShadow).render(<Takeover />);
 } else {
   createRoot(rootIntoShadow).render(<App />);
