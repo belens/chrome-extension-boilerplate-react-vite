@@ -67,6 +67,10 @@ const manifest = {
       matches: ['*://*/*'],
     },
   ],
+  content_security_policy: {
+    extension_pages:
+      "script-src 'self'; object-src 'self'; frame-src https://www.tradingview-widget.com https://*.tradingview.com",
+  },
   side_panel: {
     default_path: 'side-panel/index.html',
   },
