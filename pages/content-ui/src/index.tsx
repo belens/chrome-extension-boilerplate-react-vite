@@ -44,10 +44,25 @@ function isLeetcodeExplore() {
 
 shadowRoot.appendChild(rootIntoShadow);
 
-if (isLeetcodeExplore()) {
-  createRoot(rootIntoShadow).render(<LeetcodeExploreApp />);
-} else if (showTakeover(document.location.hostname)) {
-  createRoot(rootIntoShadow).render(<Takeover />);
-} else {
-  createRoot(rootIntoShadow).render(<App />);
+const reactRoot = createRoot(rootIntoShadow);
+
+function render() {
+  if (isLeetcodeExplore()) {
+    reactRoot.render(<LeetcodeExploreApp key={window.location.pathname} />);
+  } else if (showTakeover(document.location.hostname)) {
+    reactRoot.render(<Takeover />);
+  } else {
+    reactRoot.render(<App />);
+  }
 }
+
+render();
+
+// Re-render on SPA navigation (content scripts can't intercept page-world history calls)
+let lastUrl = location.href;
+new MutationObserver(() => {
+  if (location.href !== lastUrl) {
+    lastUrl = location.href;
+    render();
+  }
+}).observe(document, { childList: true, subtree: true });

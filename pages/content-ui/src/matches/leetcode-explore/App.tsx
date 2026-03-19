@@ -13,7 +13,9 @@ export default function App() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: `{ item(id: "${itemId}") { question { titleSlug } } }`,
+        operationName: 'GetItem',
+        variables: { itemId },
+        query: 'query GetItem($itemId: String!) { item(id: $itemId) { question { titleSlug } } }',
       }),
     })
       .then(res => res.json())
