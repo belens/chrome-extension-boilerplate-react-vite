@@ -23,9 +23,7 @@
     "@extension/i18n": "workspace:*",
     "@extension/shared": "workspace:*",
     "@extension/storage": "workspace:*",
-    "@extension/ui": "workspace:*",
-    "uplot": "^1.6.32",
-    "uplot-react": "^1.2.4"
+    "@extension/ui": "workspace:*"
   },
   "devDependencies": {
     "@extension/tailwindcss-config": "workspace:*",

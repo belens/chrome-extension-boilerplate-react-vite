@@ -2,11 +2,17 @@ import { useMemo } from 'react';
 
 interface TradingViewWidgetProps {
   symbols: [string, string][];
+  width?: number;
   height?: number;
   colorTheme?: 'dark' | 'light';
 }
 
-export default function TradingViewWidget({ symbols, height = 400, colorTheme = 'dark' }: TradingViewWidgetProps) {
+export default function TradingViewWidget({
+  symbols,
+  width = 600,
+  height = 300,
+  colorTheme = 'dark',
+}: TradingViewWidgetProps) {
   const src = useMemo(() => {
     const config = {
       symbols,
@@ -15,6 +21,9 @@ export default function TradingViewWidget({ symbols, height = 400, colorTheme = 
       height: '100%',
       locale: 'en',
       colorTheme,
+      backgroundColor: 'rgba(32, 33, 36, 1)',
+      fontColor: 'rgba(156, 163, 175, 1)',
+      gridLineColor: 'rgba(255, 255, 255, 0.06)',
       autosize: true,
       showVolume: false,
       showMA: false,
@@ -38,7 +47,7 @@ export default function TradingViewWidget({ symbols, height = 400, colorTheme = 
   }, [symbols, colorTheme]);
 
   return (
-    <div className="overflow-hidden rounded-xl bg-[rgb(41,42,46)]" style={{ height }}>
+    <div style={{ width, height }}>
       <iframe
         src={src}
         style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
