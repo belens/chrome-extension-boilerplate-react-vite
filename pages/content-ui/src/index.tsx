@@ -49,10 +49,8 @@ const reactRoot = createRoot(rootIntoShadow);
 function render() {
   if (isLeetcodeExplore()) {
     reactRoot.render(<LeetcodeExploreApp key={window.location.pathname} />);
-  } else if (showTakeover(document.location.hostname)) {
-    reactRoot.render(<Takeover />);
   } else {
-    reactRoot.render(<App />);
+    reactRoot.render(null);
   }
 }
 
